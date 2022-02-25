@@ -3,11 +3,13 @@ package com.nextbasecrm.tests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utilities.WebDriverFactory;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -40,14 +42,17 @@ public class US11_Access_Profile_Page {
         WebElement clickMyProfile = driver.findElement(By.linkText("My Profile"));
         clickMyProfile.click();
 
-        List<WebElement> myProfileOptions = driver.findElements(By.xpath("//div[@id='profile-menu-filter']"));
+        List<WebElement> myProfileOptions = driver.findElements(By.xpath("//div[@id='profile-menu-filter']//a"));
 
-        for (WebElement tabs : myProfileOptions) {
-            String eachOption = tabs.getText();
 
-            System.out.println(eachOption);
+        List<String> expectedList = Arrays.asList("General", "Drive", "Tasks", "Calendar", "Conversations");
 
+        Assert.assertEquals(myProfileOptions.size(), expectedList.size());
+
+        for (int i = 0; i < myProfileOptions.size() ; i++) {
+            Assert.assertEquals(myProfileOptions.get(i).getText(), expectedList.get(i));
         }
+
 
     }
 
