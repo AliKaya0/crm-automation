@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utilities.ConfigurationReader;
@@ -31,12 +32,13 @@ public class US6_optionsUnderMoreModule {
         driver.findElement(By.xpath("//input[@value='Log In']")).click();
 
     }
-    @Test
 
-    public void optionsUnderMoreModule(){
+
+    @Test
+    public void optionsUnderMoreModule() {
         //user should be on the home page
-         driver.get("https://login1.nextbasecrm.com/stream/");
-         //user should click the more module
+        driver.get("https://login1.nextbasecrm.com/stream/");
+        //user should click the more module
         WebElement clickMoreModule = driver.findElement(By.xpath("//span[@id='feed-add-post-form-link-text']"));
         clickMoreModule.click();
 
@@ -44,18 +46,23 @@ public class US6_optionsUnderMoreModule {
         String moreTabxpath = "//span[@class='menu-popup-item-text']";
         List<WebElement> webElementList = driver.findElements(By.xpath(moreTabxpath));
 
-        ArrayList<String> expectedResults = new ArrayList<>(Arrays.asList("File", "Appreciation","Announcement", "Workflow"));
+        ArrayList<String> expectedResults = new ArrayList<>(Arrays.asList("File", "Appreciation", "Announcement", "Workflow"));
 
         for (int i = 0; i < webElementList.size(); i++) {
 
             String actualText = webElementList.get(i).getText();
-            String expectedText= expectedResults.get(i);
+            String expectedText = expectedResults.get(i);
 
             Assert.assertEquals(actualText, expectedText);
+
 
 
         }
 
     }
 
+    @AfterMethod
+    public void closeMethod() {
+        driver.close();
+    }
 }
