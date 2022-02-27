@@ -24,7 +24,7 @@ public class US6_optionsUnderMoreModule {
         driver = WebDriverFactory.getDriver(ConfigurationReader.getProperty("browser"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://login1.nextbasecrm.com/");
+        driver.get(ConfigurationReader.getProperty("env"));
 
         driver.findElement(By.xpath("//input[@name='USER_LOGIN']")).sendKeys(ConfigurationReader.getProperty("username"));
         driver.findElement(By.xpath("//input[@type='password']")).sendKeys(ConfigurationReader.getProperty("password"));
