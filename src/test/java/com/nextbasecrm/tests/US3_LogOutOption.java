@@ -1,6 +1,5 @@
 package com.nextbasecrm.tests;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,11 +7,9 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import utilities.CRM_Utilities;
+import utilities.ConfigurationReader;
 import utilities.WebDriverFactory;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 
@@ -22,28 +19,19 @@ public class US3_LogOutOption {
 
     @BeforeMethod
 
-    public void setUp() throws IOException {
+    public void setUp() {
 
-        Properties properties = new Properties();
-        FileInputStream file = new FileInputStream("configuration.properties");
-        properties.load(file);
-
-        driver = WebDriverFactory.getDriver(properties.getProperty("browser"));
+        driver = WebDriverFactory.getDriver(ConfigurationReader.getProperty("browser"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get(properties.getProperty("env"));
-
-        driver.findElement(By.xpath("//input[@name='USER_LOGIN']")).sendKeys(properties.getProperty("username"));
-
-        driver.findElement(By.xpath("//input[@type='password']")).sendKeys(properties.getProperty("password"));
-
-        driver.findElement(By.xpath("//input[@value='Log In']")).click();
+        driver.get(ConfigurationReader.getProperty("env"));
+        CRM_Utilities.crm_login(driver, ConfigurationReader.getProperty("username"), ConfigurationReader.getProperty("password"));
 
     }
 
     @Test
 
-    public void logOut_option() {
+    public void logOut_option_test() {
 
 
         WebElement ProfileMenu = driver.findElement(By.xpath("//span[@id='user-name']"));
@@ -63,7 +51,6 @@ public class US3_LogOutOption {
         logOutOption.click();
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 
         String expectedPageTitle = "Authorization";
 
