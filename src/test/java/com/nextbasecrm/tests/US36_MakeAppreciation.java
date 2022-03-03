@@ -30,28 +30,27 @@ public class US36_MakeAppreciation {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        driver.get(ConfigurationReader.getProperty("env1"));
+        driver.get(ConfigurationReader.getProperty("env"));
 
         CRM_Utilities.crm_login(driver);
     }
     @Test
     public void sendingAppreciationMessage() {
-        //   User is on the home page
         //User click MORE tab and select APPRECIATION tab
         driver.findElement(By.cssSelector("#feed-add-post-from-link-text")).click();
         driver.findElement(By.xpath("//span[.=Appreciation]")).click();
 
-        //User write an Appreciation message
+        //User writes an Appreciation message
         driver.switchTo().frame(driver.findElement(By.cssSelector(".bx-editor-iframe")));
-        driver.findElement(By.tagName("body")).sendKeys("Meeting starts!");
+        driver.findElement(By.tagName("body")).sendKeys("Thank you for your support.");
 
-        //User click the SEND button
+        //User clicks the SEND button
         driver.switchTo().defaultContent();
         driver.findElement(By.id("blog-submit-button-save")).click();
 
         //Verify the Appreciation is displayed on the feed
         WebElement feedMessage = driver.findElement(By.id("blog_post_body))"));
-        String expectedMessage = "Meeting starts!";
+        String expectedMessage = "Thank you for your support.";
         String actualText = feedMessage.getText();
         Assert.assertEquals(actualText, expectedMessage);
     }
@@ -60,11 +59,11 @@ public class US36_MakeAppreciation {
 
         public void sendingEmptyAppreciationMessage() {
             //   User is on the home page
-            //User click MORE tab and select APPRECIATION tab
+            //User clicks MORE tab and select APPRECIATION tab
             driver.findElement(By.cssSelector("#feed-add-post-from-link-text")).click();
             driver.findElement(By.xpath("//span[.=Appreciation]")).click();
 
-            //User click the SEND button
+            //User clicks the SEND button
             driver.switchTo().defaultContent();
             driver.findElement(By.id("blog-submit-button-save")).click();
 
